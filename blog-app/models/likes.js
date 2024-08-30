@@ -5,7 +5,7 @@ const likeSchema = new Schema({
    LikeID: { type: Number, unique: true, required: true },
    PostID: { type: Number, required: true },
    UserID: { type: Number, required: true },
-   createdAt: { type: Date, default: Date.now }
+   CreatedAt: { type: Date, default: Date.now }
  });
 
 

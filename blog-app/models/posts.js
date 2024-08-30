@@ -7,7 +7,7 @@ const postSchema = new Schema({
   Description: { type: String, trim: true, required: true },
   Image: { type: String, trim: true, required: true },
   UserID: { type: Number, required: true },
-  createdAt: { type: Date, default: Date.now }
+  CreatedAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Post", postSchema);

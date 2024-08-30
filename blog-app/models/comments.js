@@ -7,7 +7,7 @@ const commentSchema = new Schema({
   Comment: { type: String, trim: true, required: true },
   PostID: { type: Number, required: true },
   UserID: { type: Number, required: true },
-  createdAt: { type: Date, default: Date.now }
+  CreatedAt: { type: Date, default: Date.now }
 });
 
 
