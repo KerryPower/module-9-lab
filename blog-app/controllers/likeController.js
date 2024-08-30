@@ -1,4 +1,4 @@
-const Like = require('../models/like');
+const Like = require('../models/likes');
 
 // Create a new like
 exports.createLike = async (req, res) => {

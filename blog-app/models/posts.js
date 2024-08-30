@@ -7,7 +7,7 @@ const postSchema = new Schema({
   Title: { type: String, trim: true, required: true },
   Description: { type: String, trim: true, required: true },
   Image: { type: String, trim: true, required: true },
-  UserId: { type: Number, required: true },
+  UserID: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 

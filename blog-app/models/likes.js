@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const likeSchema = new Schema({
    LikeID: { type: Number, required: true, unique: true },
    PostID: { type: Number, required: true },
-   UserId: { type: Number, required: true },
+   UserID: { type: Number, required: true },
    createdAt: { type: Date, default: Date.now }
  });
 

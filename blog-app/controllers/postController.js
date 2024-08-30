@@ -1,7 +1,7 @@
-const Post = require('../models/post');
-const Like = require('../models/like');
-const User = require('../models/user');
-const Comment = require('../models/comment');
+const Post = require('../models/posts');
+const Like = require('../models/likes');
+const User = require('../models/users');
+const Comment = require('../models/comments');
 
 // Create a new post
 exports.createPost = async (req, res) => {
@@ -27,7 +27,7 @@ exports.getPostById = async (req, res) => {
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }
-        const user = await User.findOne({ UserID: post.UserId }).exec();
+        const user = await User.findOne({ UserID: post.UserID }).exec();
         const comments = await Comment.find({ PostID: post.PostID }).exec();
         const likeCount = await Like.countDocuments({ PostID: post.PostID }).exec();
 

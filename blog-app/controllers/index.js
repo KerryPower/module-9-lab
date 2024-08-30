@@ -1,8 +1,8 @@
 'use strict'
 
 module.exports = {
-    userController: require('./usersController'),
-    postController: require('./postsController'),
-    likeController: require('./likeCsontroller'),
-    commentController: require('./commentsController')
+    userController: require('./userController'),
+    postController: require('./postController'),
+    likeController: require('./likeController'),
+    commentController: require('./commentController')
 };
