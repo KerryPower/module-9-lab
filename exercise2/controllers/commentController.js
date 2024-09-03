@@ -1,7 +1,7 @@
 const Comment = require('../models/comments');
 
 // Create a new comment
-exports.createComment = async (req, res) => {
+const createComment = async (req, res) => {
     try {
         const comment = new Comment(req.body);
         await comment.save();
@@ -10,7 +10,7 @@ exports.createComment = async (req, res) => {
 };
 
 // Get all comments
-exports.getComments = async (req, res) => {
+const getComments = async (req, res) => {
     try {
         const comments = await Comment.find();
         res.status(200).json(comments);
@@ -18,7 +18,7 @@ exports.getComments = async (req, res) => {
 };
 
 // Get comments by PostID
-exports.getCommentsByPost = async (req, res) => {
+const getCommentsByPost = async (req, res) => {
     try {
         const comments = await Comment.find({ PostID: req.params.postId });
         res.status(200).json(comments);
@@ -26,7 +26,7 @@ exports.getCommentsByPost = async (req, res) => {
 };
 
 // Delete a comment by ID
-exports.deleteComment = async (req, res) => {
+const deleteComment = async (req, res) => {
     try {
         const comment = await Comment.findOneAndDelete({ CommentID: req.params.id });
         if (!comment) {
@@ -35,3 +35,10 @@ exports.deleteComment = async (req, res) => {
         res.status(204).end();
     } catch (err) {throw err};
 };
+
+module.exports = {
+    createComment,
+    getComments,
+    getCommentsByPost,
+    deleteComment
+}

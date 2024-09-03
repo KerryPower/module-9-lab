@@ -1,7 +1,7 @@
 const Like = require('../models/likes');
 
 // Create a new like
-exports.createLike = async (req, res) => {
+const createLike = async (req, res) => {
     try {
         const like = new Like(req.body);
         await like.save();
@@ -10,7 +10,7 @@ exports.createLike = async (req, res) => {
 };
 
 // Get all likes
-exports.getLikes = async (req, res) => {
+const getLikes = async (req, res) => {
     try {
         const likes = await Like.find();
         res.status(200).json(likes);
@@ -18,7 +18,7 @@ exports.getLikes = async (req, res) => {
 };
 
 // Get likes by PostID
-exports.getLikesByPost = async (req, res) => {
+const getLikesByPost = async (req, res) => {
     try {
         const likes = await Like.find({ PostID: req.params.postId });
         res.status(200).json(likes);
@@ -26,7 +26,7 @@ exports.getLikesByPost = async (req, res) => {
 };
 
 // Delete a like by ID
-exports.deleteLike = async (req, res) => {
+const deleteLike = async (req, res) => {
     try {
         const like = await Like.findOneAndDelete({ LikeID: req.params.id });
         if (!like) {
@@ -35,3 +35,10 @@ exports.deleteLike = async (req, res) => {
         res.status(204).end();
     } catch (err) {throw err};
 };
+
+module.exports = {
+    createLike,
+    getLikes,
+    getLikesByPost,
+    deleteLike
+}

@@ -4,7 +4,7 @@ const User = require('../models/users');
 const Comment = require('../models/comments');
 
 // Create a new post
-exports.createPost = async (req, res) => {
+const createPost = async (req, res) => {
     try {
         const post = new Post(req.body);
         await post.save();
@@ -13,7 +13,7 @@ exports.createPost = async (req, res) => {
 };
 
 // Get all posts
-exports.getPosts = async (req, res) => {
+const getPosts = async (req, res) => {
     try {
         const posts = await Post.find();
         res.status(200).json(posts);
@@ -21,7 +21,7 @@ exports.getPosts = async (req, res) => {
 };
 
 // Get a post by ID with populated user and comments, and total likes
-exports.getPostById = async (req, res) => {
+const getPostById = async (req, res) => {
     try {
         const post = await Post.findOne({ PostID: req.params.id }).exec();
         if (!post) {
@@ -40,8 +40,17 @@ exports.getPostById = async (req, res) => {
     } catch (err) {throw err};
 };
 
+// Get all posts by a User
+const getPostsByUser = async (req, res) => {
+    const userId = req.params.userId 
+        try {
+            const posts = await Post.find({ UserID: userId });
+            res.status(200).json(posts);
+        } catch (err) {throw err};
+    };
+
 // Update a post by ID
-exports.updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
     try {
         const post = await Post.findOneAndUpdate({ PostID: req.params.id }, req.body, { new: true });
         if (!post) {
@@ -52,7 +61,7 @@ exports.updatePost = async (req, res) => {
 };
 
 // Delete a post by ID
-exports.deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
     try {
         const post = await Post.findOneAndDelete({ PostID: req.params.id });
         if (!post) {
@@ -61,3 +70,12 @@ exports.deletePost = async (req, res) => {
         res.status(204).end();
     } catch (err) {throw err};
 };
+
+module.exports = {
+    getPosts,
+    getPostById,
+    getPostsByUser,
+    createPost,
+    updatePost,
+    deletePost
+}
