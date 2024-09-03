@@ -19,11 +19,6 @@ likes.init({
     UserID: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    CreatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
     }
 }, {
     sequelize: sequelizeInstance,

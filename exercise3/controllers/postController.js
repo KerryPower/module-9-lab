@@ -1,50 +1,75 @@
 "use strict";
 const Models = require("../models");
 
-// Finds all posts in the DB and sends array as a response
-const getPosts = (req, res) => {
-    Models.posts.findAll()
-        .then(data => {
-            res.status(200).json({ result: 200, data: data });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ result: 500, error: err.message });
-        });
+// Get all Posts
+const getPosts = async (req, res) => {
+    try {
+        const posts = await Models.posts.findAll();
+        res.status(200).json({ result: 200, Posts: posts });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ result: 500, message: 'Failed to find Posts' });
+    }
 };
 
-// Uses JSON from request body to create a new post in the DB
-const createPost = (req, res) => {
-    const data = req.body;
-    Models.posts.create(data)
-        .then(post => {
-            res.status(201).json({ result: 200, data: post });
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ result: 500, error: err.message });
-        });
+// Get Post by Id
+const getPostById = async (req, res) => {
+    try { 
+        const postId = req.params.id;
+        const post = await Models.posts.findOne( { where: { PostID: postId }});
+        res.status(200).json({ result: 200, Post: post });
+    } catch (err) { 
+        console.error(err);
+        res.status(500).json({ result: 500, message: 'Failed to find Post' })
+    }
+ }
+
+
+
+// Create a Post
+const createPost = async (req, res) => {
+    try {
+        const post = await Models.posts.create(req.body);
+        res.status(200).json({ result: 200, NewPost: post });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ result: 500, message: 'Failed to create a new Post' });
+    }
 };
 
-// Deletes a post based on the ID provided in request params
-const deletePost = (req, res) => {
-    const postId = req.params.id;
-    Models.posts.destroy({ where: { PostID: postId } })
-        .then(deletedCount => {
-            if (deletedCount > 0) {
-                res.status(200).json({ result: 200, message: 'Post deleted successfully' });
-            } else {
-                res.status(404).json({ result: 404, message: 'Post not found' });
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ result: 500, error: err.message });
-        });
+// Update a Post
+const updatePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const updatedData = req.body;
+        await Models.posts.update(updatedData, { where: { PostID: postId } });
+        const updatedPost = await Models.posts.findOne({ where: { PostID: postId } });
+        res.status(200).json({ result: 200, message: 'Post updated successfully', UpdatedPost: updatedPost });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ result: 500, message: 'Failed to update the Post' });
+    }
+};
+
+
+// Delete a Post
+const deletePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const postToDelete = await Models.posts.findOne({ where: { PostID: postId } });
+        await Models.posts.destroy({ where: { PostID: postId } });
+        res.status(200).json({ result: 200, message: 'Post deleted successfully', DeletedPost: postToDelete });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ result: 500, message: 'Failed to delete the requested Post' });
+    }
 };
 
 module.exports = {
     getPosts,
+    getPostById,
     createPost,
+    updatePost,
     deletePost
 };

@@ -23,11 +23,6 @@ comments.init({
     Comment: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    CreatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
     }
 }, {
     sequelize: sequelizeInstance,
